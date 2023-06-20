@@ -19,6 +19,7 @@ import {
 } from "../Consts/userConsts";
 import { setSnackbar } from "./snackBarActions";
 import { getProfile } from "./profileActions";
+import { getUserService } from "./serviceActions";
 
 //user sign up
 
@@ -36,7 +37,53 @@ export const userSignUp = (newUser, navigate) => async (dispatch) => {
     //dispatch({ type: SIGN_UP_FAIL, payload: error });
   }
 };
-
+//change Password
+export const updatePassword =
+  (currentPassword, newPassword, setShowPassword) => async (dispatch) => {
+    dispatch({ type: "UPDATE_PASSWORD_LOADING" });
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/api/user/passwordchange",
+        { currentPassword, newPassword },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch({ type: "UPDATE_PASSWORD_SUCCESS", payload: response.data });
+      setShowPassword(false);
+      dispatch(getCurrentUser());
+    } catch (error) {
+      console.log("error", error);
+      dispatch({ type: "UPDATE_PASSWORD_FAIL", payload: error });
+    }
+  };
+// change Email
+export const changeEmail =
+  (email, password, setShowEmail) => async (dispatch) => {
+    dispatch({ type: "UPDATE_USER_LOADING" });
+    const token = localStorage.getItem("token");
+    try {
+      const response = await axios.put(
+        "http://localhost:5000/api/user/emailchange",
+        { email, password },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("reponse", response);
+      dispatch({ type: "UPDATE_USER_SUCCESS", payload: response.data });
+      setShowEmail(false);
+      dispatch(getCurrentUser());
+    } catch (error) {
+      console.log("error", error);
+      dispatch({ type: "UPDATE_USER_FAIL", payload: error });
+    }
+  };
 //log in
 
 export const logIn = (user, navigate) => async (dispatch) => {

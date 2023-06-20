@@ -1,5 +1,6 @@
 import axios from "axios";
 import { setSnackbar } from "./snackBarActions";
+import { getUserService } from "./serviceActions";
 
 //create profile
 
@@ -103,13 +104,13 @@ export const uploadProfilePicture = (image) => async (dispatch) => {
 //update profile
 
 export const updateProfile =
-  (profile, idProfile, setEdit) => async (dispatch) => {
+  (newProfile, setShowForm, userid) => async (dispatch) => {
     dispatch({ type: "UPDATE_PROFILE_LOADING" });
     const token = localStorage.getItem("token");
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/profile/editprofile/${idProfile}`,
-        profile,
+        `http://localhost:5000/api/profile/settings`,
+        newProfile,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -117,8 +118,8 @@ export const updateProfile =
         }
       );
       dispatch({ type: "UPDATE_PROFILE_SUCCESS", payload: response.data });
-      dispatch(getProfile());
-      setEdit(false);
+      setShowForm(false);
+      dispatch(getUserService(userid));
     } catch (error) {
       console.log("error", error);
       dispatch({ type: "UPDATE_PROFILE_FAIL", payload: error });

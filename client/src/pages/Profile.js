@@ -28,7 +28,7 @@ const Profile = () => {
   const currentUser = useSelector((state) => state.userReducer.currentUser);
   const followersList = useSelector((state) => state.serviceReducer.followers);
   const followingList = useSelector((state) => state.serviceReducer.following);
-
+  const newProfile = useState();
   const handleRate = () => {
     dispatch(rating(service._id, rate, userid));
     setPopRating(false);

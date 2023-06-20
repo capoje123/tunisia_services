@@ -37,7 +37,46 @@ router.post("/signup", userRegisterRules(), validator, async (req, res) => {
     res.end();
   }
 });
-
+//change password
+router.put("/passwordchange", isAuth(), async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const emailUser = req.user.email;
+  try {
+    const existUser = await User.findOne({ email: emailUser });
+    const match = await bcrypt.compare(currentPassword, existUser.password);
+    if (!match) {
+      return res.status(400).send({ msg: "incorrect password" });
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const response = await User.updateOne(
+      { _id: existUser._id },
+      { password: hashedPassword }
+    );
+    res.send({ msg: "password changed" });
+  } catch (error) {
+    res.status(400).send({ msg: error.message });
+  }
+});
+//change email
+router.put("/emailchange", isAuth(), async (req, res) => {
+  const { password, email } = req.body;
+  const emailUser = req.user.email;
+  console.log("password", typeof password, "email", typeof email);
+  try {
+    const existUser = await User.findOne({ email: emailUser });
+    const match = await bcrypt.compare(password, existUser.password);
+    if (!match) {
+      return res.status(400).send({ msg: "incorrect password" });
+    }
+    const response = await User.updateOne(
+      { _id: existUser._id },
+      { email: email }
+    );
+    res.send({ msg: "email updated" });
+  } catch (error) {
+    res.status(400).send({ msg: error.message });
+  }
+});
 // log in
 
 router.post("/login", logInRules(), validator, async (req, res) => {

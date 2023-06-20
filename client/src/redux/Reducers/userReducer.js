@@ -16,6 +16,12 @@ import {
   LOG_IN_SUCCESS,
   LOG_OUT,
   SIGN_UP_FAIL,
+  UPDATE_PASSWORD_FAIL,
+  UPDATE_PASSWORD_LOADING,
+  UPDATE_PASSWORD_SUCCESS,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_LOADING,
+  UPDATE_USER_SUCCESS,
 } from "../Consts/userConsts";
 
 const initialState = {
@@ -69,6 +75,20 @@ export const userReducer = (state = initialState, { type, payload }) => {
       return { ...state, errors: payload, loading: false };
     case GET_ALL_WORKERS_SUCCESS:
       return { ...state, allWorkers: payload, loading: false };
+
+    case UPDATE_USER_LOADING:
+      return { ...state, loading: true };
+    case UPDATE_USER_FAIL:
+      return { ...state, errors: payload, loading: false };
+    case UPDATE_USER_SUCCESS:
+      return { ...state, loading: false };
+
+    case UPDATE_PASSWORD_LOADING:
+      return { ...state, loading: true };
+    case UPDATE_PASSWORD_FAIL:
+      return { ...state, errors: payload, loading: false };
+    case UPDATE_PASSWORD_SUCCESS:
+      return { ...state, loading: false };
 
     default:
       return state;

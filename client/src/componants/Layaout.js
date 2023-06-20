@@ -20,7 +20,7 @@ const Layaout = () => {
             </Link>
           </ul>
         </nav>
-        <div className=" border-l-2 h-full overflow-y-auto">
+        <div className=" border-l-2 h-full w-full overflow-y-auto">
           <Outlet />
         </div>
       </div>

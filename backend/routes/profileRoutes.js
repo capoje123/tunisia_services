@@ -105,11 +105,9 @@ router.put("/uploadprofileimage", isAuth(), async (req, res) => {
 
 // update profile
 
-router.put("/Settings/:id", isAuth(), async (req, res) => {
-  const userid = req.user._id;
-  const profileToUpdate = await Profile.find({});
-  if (!profileToUpdate.user == req.user._id) {
-    return res.status(401).send({ msg: "unauthorized" });
+router.put("/Settings", isAuth(), async (req, res) => {
+  if (req.body[1].role) {
+    return res.status(400).send({ msg: "unauthorized " });
   }
   try {
     const response = await Profile.updateOne(
@@ -123,6 +121,9 @@ router.put("/Settings/:id", isAuth(), async (req, res) => {
 
     if (!response.modifiedCount) {
       return res.status(400).send({ msg: "profile already updated" });
+    }
+    if (!response2.modifiedCount) {
+      return res.status(400).send({ msg: "User already updated" });
     }
     res.send({ msg: "profile successfuly updated" });
   } catch (error) {
