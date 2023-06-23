@@ -101,32 +101,7 @@ const Dropdown = ({ setTokenState }) => {
           >
             Settings
           </Link>
-          <Link
-            to="#"
-            className="block font-semibold px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            Keyboard shortcuts
-          </Link>
-          <hr className="border-gray-200 dark:border-gray-700 " />
-          <Link
-            to="#"
-            className="block font-semibold px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            Company profile
-          </Link>
-          <Link
-            to="#"
-            className="block font-semibold px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            Team
-          </Link>
-          <Link
-            to="#"
-            className="block font-semibold px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            Invite colleagues
-          </Link>
-          <hr className="border-gray-200 dark:border-gray-700 " />
+
           <Link
             to="#"
             className="block font-semibold px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"

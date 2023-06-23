@@ -14,10 +14,8 @@ import InfoPersonel from "./componants/InfoPersonel";
 import Layaout from "./componants/Layaout";
 import Securité from "./componants/Securité";
 import Help from "./componants/Help";
-import {
-  getCUrrentService,
-  getUserService,
-} from "./redux/Actions/serviceActions";
+import { getUserService } from "./redux/Actions/serviceActions";
+import Contact from "./pages/Contact";
 
 function App() {
   const currentUser = useSelector((state) => state.serviceReducer.userService);
@@ -36,6 +34,7 @@ function App() {
           <Route element={<Securité />} path="/settings/securité" />
           <Route element={<Help />} path="/settings/help" />
         </Route>
+        <Route element={<Contact />} path="/contact" />
         <Route element={<Home />} path="/" />
         <Route element={<SignIn />} path="/signin" />
         <Route element={<SignUp />} path="/signup" />

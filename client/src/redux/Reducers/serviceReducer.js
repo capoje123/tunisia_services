@@ -147,7 +147,18 @@ export const serviceReducer = (state = initialState, { type, payload }) => {
       };
     case UPDATE_PROFESSION_FAIL:
       return { ...state, error: payload, loading: false };
-
+    case UNFOLLOW_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UNFOLLOW_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case UNFOLLOW_FAIL:
+      return { ...state, error: payload, loading: false };
     case FOLLOWING_LOADING:
       return {
         ...state,
@@ -158,22 +169,6 @@ export const serviceReducer = (state = initialState, { type, payload }) => {
         ...state,
         loading: false,
       };
-    case FOLLOWING_FAIL:
-      return { ...state, error: payload, loading: false };
-
-    case RATING_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case RATING_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      };
-    case RATING_FAIL:
-      return { ...state, error: payload, loading: false };
-
     case FOLLOWING_FAIL:
       return { ...state, error: payload, loading: false };
 

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import SearchDropdown from "./SearchDropdown";
@@ -28,7 +27,7 @@ export const Navbar = () => {
   const [tokenState, setTokenState] = useState(token);
 
   return (
-    <div className="fixed flex items-center  w-full h-16 shadow-xl z-50 bg-gradient-to-r from-gray-400 to-gray-200 ">
+    <div className="fixed flex items-center  w-full h-16 shadow-xl z-50 bg-white ">
       <div className=" relative flex items-center justify-between h-full w-full px-2 xl:px-12">
         <div
           className={
@@ -61,7 +60,7 @@ export const Navbar = () => {
               About
             </li>
             <li className="h-full cursor-pointer border-b-2 border-transparent hover:border-black">
-              Contact
+              <Link to="/contact">Contact</Link>
             </li>
           </ul>
         </div>

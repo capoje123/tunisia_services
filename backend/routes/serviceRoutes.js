@@ -41,7 +41,7 @@ router.get("/currentservice", isAuth(), async (req, res) => {
       .populate("profile");
     res.send(currentService);
   } catch (error) {
-    res.status(400).send("error");
+    res.status(400).send([error.message]);
   }
 });
 
@@ -57,7 +57,6 @@ router.put("/uploadimages", isAuth(), async (req, res) => {
       });
       urls.push(uploadResponse.secure_url);
     }
-    console.log(urls);
   } catch (error) {
     console.log(error);
   }
@@ -76,19 +75,16 @@ router.put("/uploadimages", isAuth(), async (req, res) => {
 
 router.put("/deleteimage", isAuth(), async (req, res) => {
   const imageUrl = req.body.imageUrl;
-  console.log("imageUrl", imageUrl);
   try {
     const updatedService = await Service.findOne({ user: req.user._id });
-    console.log("updatedService", updatedService);
     updatedService.images = updatedService.images.filter(
       (img) => img !== imageUrl
     );
     await updatedService.save();
 
-    res.send({ msg: "picture deleted" });
+    res.send([{ msg: "picture deleted" }]);
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    res.status(400).send([error.message]);
   }
 });
 
@@ -148,7 +144,7 @@ router.get("/services", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(400).send({ msg: error });
+    res.status(400).send([{ msg: error.message }]);
   }
 });
 // get all service
@@ -183,12 +179,11 @@ router.get("/search", async (req, res) => {
 
     res.send(results);
   } catch (error) {
-    res.status(400).send(error);
-    console.log(error);
+    res.status(400).send([error.message]);
   }
 });
 
-//get one user service
+//get user service
 
 router.get("/userservice/:userid", async (req, res) => {
   const userId = req.params.userid;
@@ -198,8 +193,7 @@ router.get("/userservice/:userid", async (req, res) => {
       .populate("profile");
     res.send(service);
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    res.status(400).send([error.message]);
   }
 });
 
@@ -212,12 +206,11 @@ router.put("/updateservice", isAuth(), async (req, res) => {
       { ...req.body }
     );
     if (!service.modifiedCount) {
-      return res.status(400).send({ msg: "service already updated" });
+      return res.status(400).send([{ msg: "service already updated" }]);
     }
-    res.send({ msg: "service updated successfully" });
+    res.send([{ msg: "service updated successfully" }]);
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    res.status(400).send([{ msg: error.message }]);
   }
 });
 /////unfollow
@@ -230,45 +223,41 @@ router.put("/unfollow/:userId", isAuth(), async (req, res) => {
       { $pull: { followers: myId } }
     );
     if (!response.modifiedCount) {
-      return res.status(400).send({ msg: "profile alrady unfolowed" });
+      return res.status(400).send([{ msg: "profile alrady unfolowed" }]);
     }
     const reponse2 = await Service.updateOne(
       { user: myId },
       { $pull: { following: userId } }
     );
-    res.send({ msg: "you unfollowed this profile" });
+    res.send([{ msg: "you unfollowed this profile" }]);
   } catch (error) {
-    res.status(400).send(error);
-    console.log(error);
+    res.status(400).send([{ msg: error.message }]);
   }
 });
 /// follow
 router.put("/follow/:userId", isAuth(), async (req, res) => {
   const myId = req.user._id;
   const userId = req.params.userId;
-  console.log(myId);
-  console.log(userId);
   try {
     const followedUser = await Service.findOne({ user: userId });
     if (followedUser.followers.indexOf(myId) !== -1) {
-      res.status(400).send({ msg: "profile alrady folowed" });
+      res.status(400).send([{ msg: "profile alrady folowed" }]);
     } else {
       const response = await Service.updateOne(
         { user: userId },
         { $push: { followers: myId } }
       );
       if (!response.modifiedCount) {
-        return res.status(400).send({ msg: "profile alrady folowed" });
+        return res.status(400).send([{ msg: "profile alrady folowed" }]);
       }
       const reponse2 = await Service.updateOne(
         { user: myId },
         { $push: { following: userId } }
       );
-      res.send({ msg: "you following this profile" });
+      res.send([{ msg: "you following this profile" }]);
     }
   } catch (error) {
-    res.status(400).send(error);
-    console.log(error);
+    res.status(400).send([{ msg: error.message }]);
   }
 });
 
@@ -290,7 +279,6 @@ router.put("/rating", isAuth(), async (req, res) => {
       const oldRating = service.rating[userIndex].rating;
       service.rating[userIndex].rating = ratingNumber;
       service.totalRating = service.totalRating - oldRating + ratingNumber;
-      console.log("Rating updated successfully");
     } else {
       // User doesn't exist, add new rating
       service.rating.push({ userId: user._id, rating: ratingNumber });
@@ -301,45 +289,42 @@ router.put("/rating", isAuth(), async (req, res) => {
 
     res.send(service);
   } catch (error) {
-    console.log(error);
-    res.status(400).send({ error: error.message });
+    res.status(400).send([{ msg: error.message }]);
   }
 });
+//get followres
 router.get("/followres/:serviceId", isAuth(), async (req, res) => {
   const serviceId = req.params.serviceId;
-  console.log(serviceId);
   try {
     const response = await Service.findOne({ _id: serviceId });
-    console.log(response);
     const followeresServices = await Service.find({
       user: { $in: response.followers },
     })
-      .select("-rating -images -followers -following -profession -totalRating")
+      .select("-rating -images -followers -following -albums -totalRating")
       .populate("user", "firstName lastName")
       .populate("profile", "profileImg");
+    console.log("response", response);
     res.send(followeresServices);
   } catch (error) {
-    console.log("error", error);
-    res.status(400).send(error);
+    res.status(400).send([{ msg: error.message }]);
   }
 });
 //get Following
 router.get("/following/:serviceId", isAuth(), async (req, res) => {
   const serviceId = req.params.serviceId;
-  console.log(serviceId);
+
   try {
     const response = await Service.findOne({ _id: serviceId });
-    console.log(response);
+
     const followingServices = await Service.find({
       user: { $in: response.following },
     })
-      .select("-rating -images -followers -following -profession -totalRating")
+      .select("-rating -images -followers -following -albums -totalRating")
       .populate("user", "firstName lastName")
       .populate("profile", "profileImg");
     res.send(followingServices);
   } catch (error) {
-    console.log("error", error);
-    res.status(400).send(error);
+    res.status(400).send([{ msg: error.message }]);
   }
 });
 module.exports = router;

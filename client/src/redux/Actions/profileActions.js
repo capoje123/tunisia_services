@@ -2,29 +2,6 @@ import axios from "axios";
 import { setSnackbar } from "./snackBarActions";
 import { getUserService } from "./serviceActions";
 
-//create profile
-
-export const createProfile = (profile, navigate) => async (dispatch) => {
-  dispatch({ type: "CREATE_PROFILE_LOADING" });
-  const token = localStorage.getItem("token");
-  try {
-    const response = await axios.post(
-      "http://localhost:5000/api/profile/createprofile",
-      profile,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    dispatch({ type: "CREATE_PROFILE_SUCCESS", payload: response.data });
-    dispatch(setSnackbar(true, "success", "profile created!"));
-  } catch (error) {
-    console.log(error);
-    dispatch({ type: "CREATE_PROFILE_FAIL", payload: error });
-  }
-};
-
 //create worker profile
 
 export const createWorkerProfile =

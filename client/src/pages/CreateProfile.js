@@ -14,11 +14,13 @@ const CreateProfile = () => {
     <>
       <Navbar />
       <div className="w-full h-screen ">
-        <div className="w-full h-full  bg-gray-600 flex flex-col items-center justify-center gap-6 border-2 md:flex-row md:justify-around">
+        <div className="w-full h-full  bg-gray-100 flex flex-col items-center justify-center gap-6 border-2 md:flex-row md:justify-around">
           <h1 className="">Create Your Profile</h1>
-          <div className="flex flex-col gap-6">
-            <div className="flex flex-col items-center gap-3">
-              <label>City</label>
+          <div className="w-full flex flex-col gap-6">
+            <div className=" w-[75%] flex flex-col items-center justify-center gap-5">
+              <label className="text-base  inline-block py-1 px-2 uppercase tracking-widest">
+                City
+              </label>
               <select
                 onChange={(e) =>
                   setProfile({ ...profile, city: e.target.value })
@@ -32,7 +34,9 @@ const CreateProfile = () => {
               </select>
             </div>
             <div className="flex flex-col items-center gap-3">
-              <label>Adress</label>
+              <label className="text-base  inline-block py-1 px-2 uppercase tracking-widest">
+                Adress
+              </label>
               <input
                 onChange={(e) =>
                   setProfile({ ...profile, adress: e.target.value })
@@ -43,7 +47,9 @@ const CreateProfile = () => {
               />
             </div>
             <div className="flex flex-col items-center gap-3">
-              <label>Phone Number</label>
+              <label className="text-base  inline-block py-1 px-2 uppercase tracking-widest">
+                Phone Number
+              </label>
               <input
                 onChange={(e) =>
                   setProfile({ ...profile, phoneNumber: e.target.value })
@@ -54,7 +60,9 @@ const CreateProfile = () => {
               />
             </div>
             <div className="flex flex-col items-center gap-3">
-              <label>Profession</label>
+              <label className="text-base  inline-block py-1 px-2 uppercase tracking-widest">
+                Profession
+              </label>
               <select
                 onChange={(e) =>
                   setService({ ...service, profession: e.target.value })

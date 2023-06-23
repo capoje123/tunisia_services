@@ -16,18 +16,19 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="w-full h-full relative">
+    <div className="w-full h-full overflow-hidden relative">
       <Navbar />
       {/** main */}
 
-      <div className="h-full w-full grid grid-cols-[300px_minmax(950px,_1fr)_100px] pt-20 border-4 ">
+      <div className="h-full w-full flex gap-1 pt-16 ">
         <div className="bg-gray-700 p-8">
           <SearchMenu />
         </div>
-        <div className="border-8 flex gap-5 flex-wrap p-4">
+        <div className="border-4 flex gap-3 flex-wrap p-4">
           {servicesArray.map((el) => (
             <Link key={el._id} to={`/profile/${el.user._id}`}>
-            <Card key={el._id} el={el} /></Link>
+              <Card key={el._id} el={el} />
+            </Link>
           ))}
         </div>
       </div>

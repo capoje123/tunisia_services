@@ -34,6 +34,7 @@ const Profile = () => {
     setPopRating(false);
     setRate(0);
   };
+  console.log("followres list", followersList);
   //profile image upload
 
   useEffect(() => {
@@ -157,15 +158,21 @@ const Profile = () => {
               onClick={() => dispatch(getFollowers(service._id))}
               className="flex items-center flex-col"
             >
-              <FollowModal List={followersList} type={"Followers"} />
-              <p>{service?.followers?.length}</p>
+              <FollowModal
+                List={followersList}
+                type={"Followers"}
+                number={service?.followers?.length}
+              />
             </div>
             <div
               onClick={() => dispatch(getFollowing(service._id))}
               className="flex items-center flex-col"
             >
-              <FollowModal List={followingList} type={"following"} />
-              <p>{service?.following?.length}</p>
+              <FollowModal
+                List={followingList}
+                type={"following"}
+                number={service?.following?.length}
+              />
             </div>
           </div>
           <div className="w-[80%] m-auto">

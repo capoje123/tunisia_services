@@ -61,7 +61,7 @@ const SearchMenu = ({ setSearchMenu }) => {
           name="simple-controlled"
           size="medium"
           sx={{
-            fontSize: "4rem",
+            fontSize: "3rem",
 
             "& .MuiRating-iconFilled": {
               color: "yellow",
